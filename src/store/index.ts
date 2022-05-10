@@ -3,12 +3,14 @@ import thunkMiddleware from "redux-thunk";
 
 import usersReducer from "./UserSilce/UserSlice";
 import profileReducer from "./ProfileSlice/ProfileSlice";
+import productsReducer from "./ProductsSilce/ProductsSilce"
 import {useDispatch} from "react-redux";
 
 export const Store = configureStore({
     reducer: {
         users: usersReducer,
-        profile: profileReducer
+        profile: profileReducer,
+        products: productsReducer
     },
     middleware: [thunkMiddleware],
 });

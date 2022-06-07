@@ -1,4 +1,15 @@
-import {Avatar, Box, Button, InputAdornment, Stack, TextField} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    FormControl,
+    InputAdornment,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+    TextField
+} from "@mui/material";
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import {FormEvent, useState} from "react";
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +19,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle'
 import {styled} from "@mui/material/styles";
 import axios from "axios";
+import Category from "../../../../../@types/Category";
+
 
 const Input = styled('input')({
     display: 'none',
@@ -15,12 +28,13 @@ const Input = styled('input')({
 
 interface AddProductsProps {
     HandleReset: Function
+    categories: Category[]
 }
 
 
 const AddProducts = (props: AddProductsProps) => {
 
-    const {HandleReset} = props;
+    const {HandleReset, categories} = props;
 
     const [open, setOpen] = useState<boolean>(false);
     const handleClickOpen = () => {
@@ -140,15 +154,35 @@ const AddProducts = (props: AddProductsProps) => {
                     <TextField margin="normal" fullWidth required label="Description"
                                variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)}/>
 
-                    <TextField margin="normal" fullWidth required label="Category"
-                               variant="outlined" value={category} onChange={(e) => setCategory(e.target.value)}/>
+                    <FormControl fullWidth margin="normal" size="medium">
+                        <InputLabel id="demo-select-small">Category</InputLabel>
+                        <Select
+                            labelId="demo-select-small"
+                            id="demo-select-small"
+                            value={category}
+                            label="Category"
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            {
+                                categories.map((el) => {
+                                    return (<MenuItem key={el._id} value={el.name}>
+                                        {el.name}
+                                    </MenuItem>)
+                                })
+                            }
+                        </Select>
+                    </FormControl>
+
 
                     <TextField margin="normal" fullWidth required label="Stock"
                                variant="outlined" value={stock}
                                onChange={(e) => setStock(Number.parseInt(e.target.value))}/>
 
 
-                    <TextField margin="normal" fullWidth required label="Stock"
+                    <TextField margin="normal" fullWidth required label="Price"
                                variant="outlined" value={price}
                                onChange={(e) => setPrice(parseInt(e.target.value))}/>
 

@@ -6,11 +6,12 @@ import {statePayloadFetch} from "./type";
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async (state: statePayloadFetch, thunkApi) => {
-        const {skip} = state
+        const {skip, limit} = state
         try {
             const res = await axios.get("http://localhost:3000/product", {
                 params: {
-                    skip: skip
+                    skip: skip,
+                    limit: limit
                 }
             })
 

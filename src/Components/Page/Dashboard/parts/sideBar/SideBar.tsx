@@ -14,6 +14,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import {Link, useLocation} from "react-router-dom";
+import CategoryIcon from '@mui/icons-material/Category';
 
 const drawerWidth = 240;
 
@@ -83,6 +84,7 @@ const SideBar = ({open, handleDrawerClose}: SideBarPropsInterface) => {
         },
         {name: "products", icon: <QrCode2Icon/>},
         {name: "order", icon: <LocalGroceryStoreIcon/>},
+        {name: "category", icon: <CategoryIcon/>}
     ];
 
     return (

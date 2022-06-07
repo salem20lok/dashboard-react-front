@@ -13,6 +13,9 @@ import ProductsType from "../../../@types/ProductsType";
 import ProductsRow from "./parts/ProductsRow/ProductsRow";
 import {Box} from "@mui/material";
 import AddProducts from "./parts/addProducts/AddProducts";
+import Pagination from "@mui/material/Pagination";
+import Category from "../../../@types/Category";
+import axios from "axios";
 
 
 const Products = () => {
@@ -20,22 +23,33 @@ const Products = () => {
     const dispatch = useAppDispatch()
 
     const [rest, setRest] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1)
+    const [category, setCategory] = useState<Category[]>([])
 
     const HandleReset = () => {
         setRest(!rest)
     }
 
     useEffect(() => {
-        dispatch(fetchProducts({skip: 0}))
-    }, [rest])
+        dispatch(fetchProducts({skip: (page - 1) * 6, limit: 6}))
+
+        axios.get("http://localhost:3000/category/all").then(({data}) => {
+            setCategory(data)
+        }).catch((e) => {
+            console.log(e)
+        })
+
+    }, [rest, page])
 
     const products = useSelector((state: RootState) => {
         return state.products
     })
 
+    const count = Math.ceil(products.count / 6);
+
 
     return <Box>
-        <AddProducts HandleReset={HandleReset}/>
+        <AddProducts categories={category} HandleReset={HandleReset}/>
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
@@ -50,11 +64,21 @@ const Products = () => {
                 </TableHead>
                 <TableBody>
                     {products.products.map((product: ProductsType) => (
-                        <ProductsRow HandleReset={HandleReset} key={product._id} product={product}/>
+                        <ProductsRow categories={category} HandleReset={HandleReset} key={product._id}
+                                     product={product}/>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
+        <Box sx={{m: 2, display: "flex", justifyContent: "center"}}>
+            <Pagination
+                page={page}
+                defaultPage={1}
+                onChange={(e, page) => {
+                    setPage(page)
+                }}
+                count={count} variant="outlined" shape="rounded"/>
+        </Box>
     </Box>
 };
 

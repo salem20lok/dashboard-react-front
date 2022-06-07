@@ -4,15 +4,17 @@ import ProductsType from "../../../../../@types/ProductsType";
 import {Avatar, ButtonGroup} from "@mui/material";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import UpdateProduct from "../UpdateProduct/UpdateProduct";
+import Category from "../../../../../@types/Category";
 
 
 interface ProductsRowPropsInterface {
     product: ProductsType;
     HandleReset: Function;
+    categories: Category[]
 }
 
 const ProductsRow = (props: ProductsRowPropsInterface) => {
-    const {product, HandleReset} = props
+    const {product, HandleReset, categories} = props
     return <TableRow
         key={product._id}
         sx={{'&:last-child td, &:last-child th': {border: 0}}}
@@ -22,7 +24,7 @@ const ProductsRow = (props: ProductsRowPropsInterface) => {
             <Avatar
                 alt={product.title}
                 src={product.images}
-                sx={{width: 56, height: 56}}
+                sx={{width: 50, height: 50}}
             />
         </TableCell>
         <TableCell align="right">{product.title}</TableCell>
@@ -33,7 +35,7 @@ const ProductsRow = (props: ProductsRowPropsInterface) => {
 
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                 <DeleteProduct HandleReset={HandleReset} product={product}/>
-                <UpdateProduct HandleReset={HandleReset} product={product}/>
+                <UpdateProduct categories={categories} HandleReset={HandleReset} product={product}/>
             </ButtonGroup>
 
         </TableCell>

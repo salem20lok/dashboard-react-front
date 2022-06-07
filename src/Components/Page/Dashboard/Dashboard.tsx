@@ -20,6 +20,7 @@ import Profile from "../profile/Profile";
 import {useSelector} from "react-redux";
 import {addProfile} from "../../../store/ProfileSlice/ProfileSlice";
 import {RootState, useAppDispatch} from "../../../store";
+import Category from "../category/Category";
 
 const drawerWidth = 240;
 
@@ -130,6 +131,7 @@ const Dashboard = () => {
                         <Route path={"/dashboard/products"} element={<Products/>}/>
                         <Route path={"/dashboard/order"} element={<Order/>}/>
                         <Route path={"/dashboard/profile"} element={<Profile/>}/>
+                        <Route path="/dashboard/category" element={<Category/>}/>
                     </Routes>
                 </main>
             </Box>

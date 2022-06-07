@@ -9,4 +9,5 @@ export interface ProductsState {
 
 export interface statePayloadFetch {
     skip: number
+    limit: number
 }
